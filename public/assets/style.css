@@ -548,7 +548,6 @@ header {
     border: 2px solid #000000;
     border-radius: 5px;
     background: white;
-    font-size: 0.8rem;
     transition: all 0.3s ease;
     font-size: 0.9rem;
 }
@@ -874,6 +873,15 @@ header {
 
 .auth-form-register {
     gap: 1.1rem;
+}
+
+.auth-error {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e2a4a4;
+    background: #fff0f0;
+    color: #9f1d1d;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .auth-field label {

@@ -4,11 +4,10 @@
             <div class="logo">IAU UniShop</div>
             <ul class="nav-links">
                 <li><a href="{{ route('welcome') }}">Welcome</a></li>
-                <li><a href="{{ route('store') }}">Store</a></li>
-                <li><a href="{{ route('admin.login') }}">Admin</a></li>
+                <li><a href="{{ route('products.index') }}">Store</a></li>
             </ul>
             <div class="nav-action">
-                <a href="{{ route('store') }}" class="cart-btn">
+                <a href="{{ route('products.index') }}" class="cart-btn">
                     <i class="fas fa-store"></i>
                     Browse Store
                 </a>
@@ -45,10 +44,17 @@
                     <p>Enter your account details to continue.</p>
                 </div>
 
-                <form class="auth-form" onsubmit="handleLogin(event)">
+                <form class="auth-form" action="{{route('login.store')}}" method="post">
+                    @csrf
+                    @if ($errors->any())
+                        <div class="auth-error">
+                            {{ $errors->first('email') ?? $errors->first('password') }}
+                        </div>
+                    @endif
+
                     <div class="auth-field">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="student@iau.edu.sa" required>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="student@iau.edu.sa" required>
                     </div>
 
                     <div class="auth-field">
@@ -61,7 +67,7 @@
 
                 <div class="auth-links">
                     <a href="{{ route('welcome') }}" class="back">Back</a>
-                    <a href="{{ route('register') }}" class="auth-text-link">Create an account</a>
+                    <a href="{{ route('register.create') }}" class="auth-text-link">Create an account</a>
                 </div>
             </div>
         </section>
@@ -70,7 +76,7 @@
     <script>
         function handleLogin(e) {
             e.preventDefault();
-            window.location.href = '{{ route('store') }}';
+            window.location.href = '{{ route('products.index') }}';
         }
     </script>
 </x-guest-layout>

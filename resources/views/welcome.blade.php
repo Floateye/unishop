@@ -5,10 +5,10 @@
             <ul class="nav-links">
                 <li><a href="#welcome">Welcome</a></li>
                 <li><a href="#preview">Why Shop Here</a></li>
-                <li><a href="{{ route('store') }}">Store</a></li>
+                <li><a href="{{ route('products.index') }}">Store</a></li>
             </ul>
             <div class="nav-action">
-                <a href="{{ route('store') }}" class="cart-btn">
+                <a href="{{ route('products.index') }}" class="cart-btn">
                     <i class="fas fa-store"></i>
                     Visit Store
                 </a>
@@ -25,8 +25,8 @@
                 <p>Choose how you want to enter the site and continue with the same look and feel as the rest of the storefront.</p>
                 <div class="welcome-actions">
                     <a href="{{ route('login') }}" class="shop-btn">User Login</a>
-                    <a href="{{ route('admin.login') }}" class="shop-btn welcome-secondary">Admin Login</a>
-                    <a href="{{ route('store') }}" class="shop-btn">Continue as Guest</a>
+                    <a href="" class="shop-btn welcome-secondary">Admin Login</a>
+                    <a href="{{ route('products.index') }}" class="shop-btn">Continue as Guest</a>
                 </div>
                 <div class="welcome-features">
                     <div class="welcome-feature">

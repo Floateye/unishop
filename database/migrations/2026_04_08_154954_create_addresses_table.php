@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('address');
             $table->string('address_2')->nullable();
-            $table->string('phone');
-            $table->string('zip_code');
+            $table->string('phone')->nullable();
+            $table->string('zip_code')->nullable();
             $table->string('city');
-            $table->string('province');
-            $table->string('country');
+            $table->string('province')->nullable();;
+            $table->string('country')->nullable();;
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
