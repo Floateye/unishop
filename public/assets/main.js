@@ -254,23 +254,29 @@ document.addEventListener('DOMContentLoaded', function () { // render the events
     }
 });
 
-document.getElementById('cartModal').addEventListener('click', function (e) {
-    if (e.target === this) {
-        toggleCart();
-    }
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== "#") {
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+document.addEventListener('DOMContentLoaded', function () { // Click outside of the cart to leave
+    const cartModal = document.getElementById('cart-modal');
+    if (cartModal) {
+        cartModal.addEventListener('click', function (e) {
+            if (e.target === this) {
+                toggleCart();
             }
-        }
+        });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) { // smooth scrolling
+            const href = this.getAttribute('href');
+            if (href !== "#") {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
     });
 });
+
 
 
