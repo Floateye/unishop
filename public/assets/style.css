@@ -388,9 +388,9 @@ header {
 .cart-item-image {
     width: 90px;
     height: 90px;
-   object-fit: cover;
-   border-radius: 8px;
-   flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
 }
 
 .cart-item-info {
@@ -657,7 +657,8 @@ header {
     border-bottom: 1px solid #ffffff;
 }
 
-.welcome-actions { /* all actions defined in the welcome page */
+.welcome-actions {
+    /* all actions defined in the welcome page */
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -671,7 +672,8 @@ header {
     min-width: 190px;
 }
 
-.welcome-secondary { /* the other card */
+.welcome-secondary {
+    /* the other card */
     background: transparent;
     border: 2px solid #ffffff;
 }
@@ -699,7 +701,8 @@ header {
     line-height: 1.8;
 }
 
-.welcome-features { /* the features section in the welcome page */
+.welcome-features {
+    /* the features section in the welcome page */
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
@@ -723,7 +726,8 @@ header {
     background: #d5dcf7;
 }
 
-.welcome-preview-grid { /* the layout for the welcome page preview */
+.welcome-preview-grid {
+    /* the layout for the welcome page preview */
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
@@ -731,7 +735,8 @@ header {
     gap: 2rem;
 }
 
-.welcome-card { /* the card in the welcome page */
+.welcome-card {
+    /* the card in the welcome page */
     background: #aac1ff;
     padding: 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -748,7 +753,8 @@ header {
 }
 
 /* the login page!!! */
-.auth-page { /* the background and the layout for the auth page */
+.auth-page {
+    /* the background and the layout for the auth page */
     min-height: 100vh;
     padding: 7rem 2rem 3rem;
     background:
@@ -759,7 +765,8 @@ header {
     justify-content: center;
 }
 
-.auth-shell { /* the main shell that holds the cards for the login. looks cool no? */
+.auth-shell {
+    /* the main shell that holds the cards for the login. looks cool no? */
     width: min(1180px, 100%);
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -783,7 +790,8 @@ header {
     justify-content: center;
 }
 
-.auth-eyebrow { /* the little text above the heading in the auth page */
+.auth-eyebrow {
+    /* the little text above the heading in the auth page */
     display: inline-flex;
     align-self: flex-start;
     background: rgba(170, 193, 255, 0.2);
@@ -961,7 +969,8 @@ header {
     min-height: 100vh;
 }
 
-.admin-header { /* getting the header down!!!! */
+.admin-header {
+    /* getting the header down!!!! */
     background: #031034;
     color: white;
     position: sticky;
@@ -990,7 +999,8 @@ header {
     display: none;
 }
 
-.admin-container { /* containing the admin stuff :p */
+.admin-container {
+    /* containing the admin stuff :p */
     max-width: 1400px;
     margin: 3rem auto;
     padding: 0 2rem;
@@ -1006,7 +1016,8 @@ header {
     border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
-.admin-card-header { /* the header of the admin card */
+.admin-card-header {
+    /* the header of the admin card */
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 2px solid #f0f4f8;
@@ -1032,7 +1043,8 @@ header {
     gap: 1.5rem;
 }
 
-.admin-stat-card { /* SO FAR everything is straightforward and reused */
+.admin-stat-card {
+    /* SO FAR everything is straightforward and reused */
     background: linear-gradient(135deg, #102f85 0%, #031034 100%);
     color: white;
     padding: 2.5rem;
@@ -1048,13 +1060,15 @@ header {
     transform: translateY(-5px);
 }
 
-.admin-stat-card i { /* the icon */
+.admin-stat-card i {
+    /* the icon */
     font-size: 3.5rem;
     color: #aac1ff;
     opacity: 0.8;
 }
 
-.admin-stat-info h3 { /* the text */
+.admin-stat-info h3 {
+    /* the text */
     font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
@@ -1101,7 +1115,7 @@ header {
     background: white;
 }
 
-.admin-table th, 
+.admin-table th,
 .admin-table td {
     padding: 1.25rem 1rem;
     text-align: left;
@@ -1141,9 +1155,20 @@ header {
     font-weight: 600;
 }
 
-.badge-primary { background: #dbeafe; color: #1e40af; }
-.badge-success { background: #dcfce7; color: #166534; }
-.badge-warning { background: #fef08a; color: #854d0e; }
+.badge-primary {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-warning {
+    background: #fef08a;
+    color: #854d0e;
+}
 
 .admin-tbl-actions {
     display: flex;
@@ -1163,11 +1188,14 @@ header {
     gap: 0.35rem;
 }
 
-.admin-btn-edit, .admin-btn-view {
+.admin-btn-edit,
+.admin-btn-view {
     background: #eff6ff;
     color: #1e3a8a;
 }
-.admin-btn-edit:hover, .admin-btn-view:hover {
+
+.admin-btn-edit:hover,
+.admin-btn-view:hover {
     background: #bfdbfe;
 }
 
@@ -1175,6 +1203,7 @@ header {
     background: #fef2f2;
     color: #991b1b;
 }
+
 .admin-btn-delete:hover {
     background: #fecaca;
 }
@@ -1258,5 +1287,18 @@ header {
     .auth-text-link,
     .auth-links .back {
         text-align: center;
+    }
+
+    .admin-prompt {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: #4b4b4b;
+    }
+
+    .admin-prompt a {
+        color: #102f85;
+        font-weight: 600;
+        text-decoration: none;
     }
 }
