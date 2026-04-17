@@ -2,6 +2,7 @@
     <x-store-navbar />
 
     <section class="contact-section"> <!-- main contact markup layout :D -->
+        <div class="contact-bg"></div>
         <div class="section-title">
             <h2>Contact Us</h2>
             <p>We'd love to hear from you!</p>
@@ -27,7 +28,7 @@
                 </div>
             </div>
             <div class="contact-actions">
-                <a href="{{ route('products.index') }}" class="shop-btn">Return to Store</a>
+                <a href="{{ route('products.index') }}" class="contact-btn">Return to Store</a>
             </div>
         </div>
     </section>

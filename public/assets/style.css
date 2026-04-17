@@ -1307,12 +1307,28 @@ header {
 .contact-section {
     padding: 10rem 2rem 4rem;
     min-height: 100vh;
-    background: #d5dcf7;
+    background: #000000;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.contact-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('img/custservice.webp') center/cover no-repeat;
+    opacity: 0.3;
+    z-index: -1;
 }
 
 .contact-section .section-title h2 {
-    color: #102f85;
+    color: #6e86c9;
     font-size: 3rem;
     margin-bottom: 2rem;
 }
@@ -1321,8 +1337,10 @@ header {
 
 .contact-section .section-title p {
     font-size: 1.25rem;
-    color: #4b4b4b;
+    color: #c1c1c1;
 }
+
+
 
 .contact-container {
     max-width: 600px;
@@ -1362,4 +1380,22 @@ header {
 .contact-actions {
     /* buttons */
     margin-top: 3rem;
+}
+
+.contact-btn {
+    background: #102f85;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.contact-btn:hover {
+    background: #031034;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
