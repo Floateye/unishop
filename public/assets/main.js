@@ -7,21 +7,7 @@ function toggleCart() { //toggle the cart
     cartModal.classList.toggle('active');
 
 }
-function toggleCheckout() { //show checkout form and hide the cart items
-    const modal = document.getElementById('cartModal');
-    if (modal.style.display === 'block') {
-        modal.classList.remove('active');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 400); // wait for animation to finish before hiding
-    } else {
-        modal.style.display = 'block';
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-    }
 
-}
 function selectPaymentMethod(method) { // select payment method in checkout form
     currentPaymentMethod = method;
     document.querySelectorAll('.payment-method').forEach(btn => btn.classList.remove('selected'));
@@ -156,7 +142,7 @@ function renderCartItems() { // render cart items in the cart modal
 `).join('');
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     document.getElementById('totalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
-    document.getElementById('checkoutTotal').textContent = `Total: ${total.toFixed(2)}SAR`;
+    document.getElementById('checkoutTotalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
     cartTotal.style.display = 'block';
 }
 function showCheckout() {

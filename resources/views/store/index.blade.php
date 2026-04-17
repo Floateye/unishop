@@ -160,7 +160,7 @@
                                 Order</button>
                         </div>
                         <div class="back-to-cart-btn">
-                            <button class="back" onclick="toggleCheckout()"><i class="fa fa-arrow-left"></i> Back to
+                            <button type="button" class="back" onclick="hideCheckout()"><i class="fa fa-arrow-left"></i> Back to
                                 Cart</button>
                         </div>
                     </form>

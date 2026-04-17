@@ -645,6 +645,8 @@ header {
     color: #d1d1d1;
 }
 
+/* now we do the welcome page! */
+
 .welcome-header {
     position: fixed;
     top: 0;
@@ -655,7 +657,7 @@ header {
     border-bottom: 1px solid #ffffff;
 }
 
-.welcome-actions {
+.welcome-actions { /* all actions defined in the welcome page */
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -669,7 +671,7 @@ header {
     min-width: 190px;
 }
 
-.welcome-secondary {
+.welcome-secondary { /* the other card */
     background: transparent;
     border: 2px solid #ffffff;
 }
@@ -697,7 +699,7 @@ header {
     line-height: 1.8;
 }
 
-.welcome-features {
+.welcome-features { /* the features section in the welcome page */
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
@@ -721,7 +723,7 @@ header {
     background: #d5dcf7;
 }
 
-.welcome-preview-grid {
+.welcome-preview-grid { /* the layout for the welcome page preview */
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
@@ -729,7 +731,7 @@ header {
     gap: 2rem;
 }
 
-.welcome-card {
+.welcome-card { /* the card in the welcome page */
     background: #aac1ff;
     padding: 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -745,7 +747,8 @@ header {
     margin-bottom: 0.75rem;
 }
 
-.auth-page {
+/* the login page!!! */
+.auth-page { /* the background and the layout for the auth page */
     min-height: 100vh;
     padding: 7rem 2rem 3rem;
     background:
@@ -756,7 +759,7 @@ header {
     justify-content: center;
 }
 
-.auth-shell {
+.auth-shell { /* the main shell that holds the cards for the login. looks cool no? */
     width: min(1180px, 100%);
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -780,7 +783,7 @@ header {
     justify-content: center;
 }
 
-.auth-eyebrow {
+.auth-eyebrow { /* the little text above the heading in the auth page */
     display: inline-flex;
     align-self: flex-start;
     background: rgba(170, 193, 255, 0.2);
