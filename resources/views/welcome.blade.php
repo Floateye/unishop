@@ -24,7 +24,7 @@
                 <p>The official Imam Abdulrahman bin Faisal University merchandise store with campus-inspired clothing, accessories, and souvenirs.</p>
                 <p>Choose how you want to enter the site and continue with the same look and feel as the rest of the storefront.</p>
                 <div class="welcome-actions">
-                    <a href="{{ route('login') }}" class="shop-btn">User Login</a>
+                    <a href="{{ route('login.create') }}" class="shop-btn">User Login</a>
                     <a href="" class="shop-btn welcome-secondary">Admin Login</a>
                     <a href="{{ route('products.index') }}" class="shop-btn">Continue as Guest</a>
                 </div>
