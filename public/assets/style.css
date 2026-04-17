@@ -1302,3 +1302,64 @@ header {
         text-decoration: none;
     }
 }
+
+/* contact page styles */
+.contact-section {
+    padding: 10rem 2rem 4rem;
+    min-height: 100vh;
+    background: #d5dcf7;
+    text-align: center;
+}
+
+.contact-section .section-title h2 {
+    color: #102f85;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+/* titles h2 and p */
+
+.contact-section .section-title p {
+    font-size: 1.25rem;
+    color: #4b4b4b;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #aac1ff;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-details {
+    /* OUR details */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.25rem;
+    color: #102f85;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-item i {
+    /* icons as per usual */
+    font-size: 2rem;
+    width: 40px;
+}
+
+.contact-item span {
+    font-size: 1.1rem;
+    color: #000;
+}
+
+.contact-actions {
+    /* buttons */
+    margin-top: 3rem;
+}
