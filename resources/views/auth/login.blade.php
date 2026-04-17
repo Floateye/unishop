@@ -68,11 +68,10 @@
                 <div class="auth-links">
                     <a href="{{ route('welcome') }}" class="back">Back</a>
                     <a href="{{ route('register.create') }}" class="auth-text-link">Create an account</a>
+                    <a class="auth-text-link" href="{{ route('admin-login') }}">Admin Login</a>
                 </div>
 
-                <div class = "admin-prompt">
-                    Are you an admin? <a href="/admin/login">Log in here!</a>
-                </div>
+                
             </div>
         </section>
     </main>
