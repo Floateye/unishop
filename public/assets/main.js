@@ -155,9 +155,9 @@ function renderCartItems() { // render cart items in the cart modal
     </div>
 `).join('');
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('totalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
-            document.getElementById('checkoutTotal').textContent = `Total: ${total.toFixed(2)}SAR`;
-            cartTotal.style.display = 'block';
+    document.getElementById('totalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
+    document.getElementById('checkoutTotal').textContent = `Total: ${total.toFixed(2)}SAR`;
+    cartTotal.style.display = 'block';
 }
 function showCheckout() {
 
@@ -277,6 +277,5 @@ document.addEventListener('DOMContentLoaded', function () { // Click outside of 
         });
     });
 });
-
 
 

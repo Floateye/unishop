@@ -952,6 +952,230 @@ header {
     color: #031034;
 }
 
+/* --- TIME FOR THE ADMIN!!!! --- */
+.admin-body {
+    background-color: #f4f7fc;
+    min-height: 100vh;
+}
+
+.admin-header { /* getting the header down!!!! */
+    background: #031034;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.admin-header .logo {
+    color: white;
+}
+
+.admin-header .nav-links a {
+    color: #aac1ff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.admin-header .nav-links a:hover {
+    color: #ffffff;
+    background: rgba(170, 193, 255, 0.1);
+}
+
+.admin-header .nav-links a::after {
+    display: none;
+}
+
+.admin-container { /* containing the admin stuff :p */
+    max-width: 1400px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    display: grid;
+    gap: 3rem;
+}
+
+.admin-section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.admin-card-header { /* the header of the admin card */
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f4f8;
+}
+
+.admin-card-header h2 {
+    color: #031034;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-card-header p {
+    color: #55607d;
+    margin-top: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.admin-stat-card { /* SO FAR everything is straightforward and reused */
+    background: linear-gradient(135deg, #102f85 0%, #031034 100%);
+    color: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 10px 20px rgba(16, 47, 133, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.admin-stat-card i { /* the icon */
+    font-size: 3.5rem;
+    color: #aac1ff;
+    opacity: 0.8;
+}
+
+.admin-stat-info h3 { /* the text */
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #d1deff;
+}
+
+.admin-stat-info strong {
+    font-size: 2.8rem;
+    font-weight: 800;
+}
+
+.admin-form-card {
+    background: #f8fafc;
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.admin-form-card textarea {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border: 1px solid #bcc7eb;
+    background: #ffffff;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    resize: vertical;
+}
+
+.admin-form-card textarea:focus {
+    outline: none;
+    border-color: #4f69b0;
+    box-shadow: 0 0 0 4px rgba(79, 105, 176, 0.14);
+}
+
+/* table table tables... */
+.admin-table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.admin-table th {
+    background: #f8fafc;
+    color: #031034;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+.admin-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.admin-tbl-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.admin-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-primary { background: #dbeafe; color: #1e40af; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef08a; color: #854d0e; }
+
+.admin-tbl-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-tbl-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.admin-btn-edit, .admin-btn-view {
+    background: #eff6ff;
+    color: #1e3a8a;
+}
+.admin-btn-edit:hover, .admin-btn-view:hover {
+    background: #bfdbfe;
+}
+
+.admin-btn-delete {
+    background: #fef2f2;
+    color: #991b1b;
+}
+.admin-btn-delete:hover {
+    background: #fecaca;
+}
+
 @media (max-width: 768px) {
     .cart-content {
         width: 100%;
