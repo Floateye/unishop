@@ -10,7 +10,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        return view('store.index');
+        return view('products.index');
     }
     public function create()
     {
