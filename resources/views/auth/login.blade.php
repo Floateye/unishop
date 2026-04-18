@@ -23,7 +23,7 @@
                 <p>We made this to match our shops page. Looks neat, doesn't it?</p>
                 <div class="auth-highlights">
                     <div class="auth-highlight">
-                        <i class="fas fa-bag-shopping"></i>
+                        <i class="fa fa-shopping-bag"></i>
                         <span>Continue to the store after login</span>
                     </div>
                     <div class="auth-highlight">
@@ -62,13 +62,13 @@
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
                     </div>
 
-                    <button type="submit" class="auth-submit">Login</button>
+                    <button type="submit" class="auth-btn">Login</button>
                 </form>
 
                 <div class="auth-links">
-                    <a href="{{ route('welcome.create') }}" class="back">Back</a>
+                    <a href="{{ route('welcome') }}" class="back">Back</a>
                     <a href="{{ route('register.create') }}" class="auth-text-link">Create an account</a>
-                    <a class="auth-text-link" href="{{ route('admin-login') }}">Admin Login</a>
+                    <a class="auth-text-link" href="{{ route('admin-login.create') }}">Admin Login</a>
                 </div>
 
                 

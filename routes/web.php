@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminLoginController;
 
 Route::get('/', WelcomeController::class)->name('welcome');
 
@@ -15,5 +16,9 @@ Route::post('/register',[RegisterController::class,'store'])->name('register.sto
 
 Route::get('/products',[ProductController::class,'index'] )->name('products.index');
 Route::post('/cart',[CartController::class,'store'])->name('cart.store');
-Route::get('/admin-login',[AdminLoginController::class,'create'])->name('admin-login');
+Route::post('/admin-login',[AdminLoginController::class,'store'])->name('admin-login.store');
+Route::get('/admin-login',[AdminLoginController::class,'create'])->name('admin-login.create');
 Route::view('/contact', 'store.contact')->name('contact');
+Route::get('/admin', function () {
+    return view('admin');
+})->middleware('auth')->name('admin.index');

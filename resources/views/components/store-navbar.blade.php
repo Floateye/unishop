@@ -6,6 +6,7 @@
                 <li><a href="{{ route('products.index') }}">Shop</a></li>
                 <li><a href="{{ route('products.index') }}#aboutus">About us!</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
+                <li><a href="{{ route('welcome') }}">Logout</a></li>
             </ul>
             <div class="nav-action">
                 <button class="cart-btn" onclick="toggleCart()">

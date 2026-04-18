@@ -90,7 +90,7 @@
                         <input type="text" id="address" name="address" value="{{ old('address') }}" placeholder="Street, building, district" required>
                     </div>
 
-                    <button type="submit" class="auth-submit">Create Account</button>
+                    <button type="submit" class="auth-btn">Create Account</button>
                 </form>
 
                 <div class="auth-links">

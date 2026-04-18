@@ -25,7 +25,7 @@
                 <p>Choose how you want to enter the site and continue with the same look and feel as the rest of the storefront.</p>
                 <div class="welcome-actions">
                     <a href="{{ route('login.create') }}" class="shop-btn">User Login</a>
-                    <a href="" class="shop-btn welcome-secondary">Admin Login</a>
+                    <a href="{{ route('admin-login.create') }}" class="shop-btn welcome-secondary">Admin Login</a>
                     <a href="{{ route('products.index') }}" class="shop-btn">Continue as Guest</a>
                 </div>
                 <div class="welcome-features">

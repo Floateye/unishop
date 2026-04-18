@@ -11,7 +11,7 @@ function toggleCart() { //toggle the cart
 function selectPaymentMethod(method) { // select payment method in checkout form
     currentPaymentMethod = method;
     document.querySelectorAll('.payment-method').forEach(btn => btn.classList.remove('active'));
-    
+
     if (event && event.target) {
         const el = event.target.closest('.payment-method');
         if (el) el.classList.add('active');
@@ -32,6 +32,7 @@ const products = [{
     category: "clothes",
     price: 59.99,
     image: "/assets/img/tshirt.webp",
+    size: ["S", "M", "L", "XL"],
 },
 {
     id: 2,
@@ -39,6 +40,7 @@ const products = [{
     category: "clothes",
     price: 59.99,
     image: "/assets/img/tshirt.webp",
+    size: ["S", "M", "L", "XL"],
 },
 {
     id: 3,
@@ -46,6 +48,7 @@ const products = [{
     category: "accessories",
     price: 59.99,
     image: "/assets/img/tshirt.webp",
+    size: [""],
 },
 {
     id: 4,
@@ -53,6 +56,7 @@ const products = [{
     category: "souvenirs",
     price: 59.99,
     image: "/assets/img/tshirt.webp",
+    size: [""],
 }];
 let cart = []; // shopping cart array
 let currentPaymentMethod = 'credit'; // current selected payment method

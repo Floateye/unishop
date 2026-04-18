@@ -12,8 +12,8 @@
 <body class="admin-body">
 
     <header class="admin-header"> <!-- lets start!! -->
-        <div class="nav" style="padding: 1rem;">
-            <div class="logo"><i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i> UniShop Admin Hub</div>
+        <div class="nav">
+            <div class="logo"><i class="fas fa-shield-alt"></i> UniShop Admin Hub</div>
             <ul class="nav-links">
                 <li><a href="#dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                 <li><a href="#add-product"><i class="fas fa-plus"></i> New Product</a></li>
@@ -101,7 +101,7 @@
                         <textarea id="description" name="description" rows="4" placeholder="Enter product details..." required></textarea>
                     </div>
 
-                    <div class="admin-form-actions" style="margin-top: 1rem;"> 
+                    <div class="admin-form-actions"> 
                         <button type="button" class="auth-submit"><i class="fas fa-save"></i> Save Product to Database</button> <!-- to the database it goes! -->
                     </div>
                 </form>
