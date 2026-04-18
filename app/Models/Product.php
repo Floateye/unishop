@@ -33,4 +33,8 @@ class Product extends Model
             ->withPivot('action_type')
             ->withTimestamps();
     }
+    public function reviews()
+    {
+        return $this->belongsToMany(Review::class);
+    }
 }

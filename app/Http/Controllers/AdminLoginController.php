@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+
 class AdminLoginController extends Controller
 {
     public function create()
     {
-        return view('admin-login');
+        return view('auth.admin.login');
     }
-    public function store()
+    public function store(LoginRequest $request)
     {
-        $attributes = request()->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        if (auth()->attempt($attributes)) {
+        if (auth()->attempt($validated)) {
             session()->regenerate();
-            return redirect()->route('admin.index')->with('success', 'Welcome back!');
+            return redirect()->route('dashboard')->with('success', 'Welcome back!');
         }
 
         return back()->withErrors(['email' => 'Your provided credentials could not be verified.']);

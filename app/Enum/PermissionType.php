@@ -4,6 +4,10 @@ namespace app\Enum;
 
 enum PermissionType :string
 {
+    //========================
+    // Dashboard Management
+    //========================
+    case DashboardView = 'dashboard:view';
    //========================
    // Products Management
    //========================
