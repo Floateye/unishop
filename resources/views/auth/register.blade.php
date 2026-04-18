@@ -45,7 +45,7 @@
                     <p>Fill in your information to register as a UniShop customer.</p>
                 </div>
 
-                <form class="auth-form auth-form-register" action="{{route('/register')}}" method="post">
+                <form class="auth-form auth-form-register" action="{{route('register.store')}}" method="post">
                     @csrf
                     @if ($errors->any())
                         <div class="auth-error">

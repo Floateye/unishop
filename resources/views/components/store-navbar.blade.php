@@ -2,7 +2,7 @@
         <nav class="nav">
             <div class="logo">IAU UniShop</div>
             <ul class="nav-links"><!-- navigation links -->
-                <li><a href="{{ route('welcome') }}">Home</a></li>
+                <li><a href="{{ route('products.index') }}">Home</a></li>
                 <li><a href="{{ route('products.index') }}">Shop</a></li>
                 <li><a href="{{ route('products.index') }}#aboutus">About us!</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>

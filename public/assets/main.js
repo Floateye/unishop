@@ -10,15 +10,20 @@ function toggleCart() { //toggle the cart
 
 function selectPaymentMethod(method) { // select payment method in checkout form
     currentPaymentMethod = method;
-    document.querySelectorAll('.payment-method').forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.payment-method').forEach(btn => btn.classList.remove('active'));
+    
+    if (event && event.target) {
+        const el = event.target.closest('.payment-method');
+        if (el) el.classList.add('active');
+    }
 
-    const creditCartForm = document.getElementById('creditCardForm');
-    const paypalForm = document.getElementById('paypalForm');
-    if (method === 'credit') {
-        creditCartForm.style.display = 'block';
-    } else {
-        creditCartForm.style.display = 'none';
+    const creditCardInfo = document.getElementById('creditCardInfo');
+    if (creditCardInfo) {
+        if (method === 'creditcard') {
+            creditCardInfo.style.display = 'block';
+        } else {
+            creditCardInfo.style.display = 'none';
+        }
     }
 }
 const products = [{

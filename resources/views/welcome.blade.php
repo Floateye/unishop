@@ -49,7 +49,7 @@
     <section class="welcome-preview" id="preview">
         <div class="section-title">
             <h2>Why UniShop</h2>
-            <p>Built to match the visual style of the main storefront.</p>
+            <p>Clean. Efficient. Simple.</p>
         </div>
         <div class="welcome-preview-grid">
             <article class="welcome-card">

@@ -17,10 +17,10 @@
 
     <main class="auth-page">
         <section class="auth-shell">
-            <div class="auth-showcase">
+            <div class="auth-showcase"><!-- main page -->
                 <span class="auth-eyebrow">User Portal</span>
                 <h1>Sign in to continue shopping with your IAU account.</h1>
-                <p>Access your shopping flow with a page that matches the same storefront style, colors, and visual tone as UniShop.</p>
+                <p>We made this to match our shops page. Looks neat, doesn't it?</p>
                 <div class="auth-highlights">
                     <div class="auth-highlight">
                         <i class="fas fa-bag-shopping"></i>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="auth-card">
+            <div class="auth-card"><!-- the login itself -->
                 <div class="auth-card-header">
                     <span class="auth-icon"><i class="fas fa-user-circle"></i></span>
                     <h2>User Login</h2>
@@ -66,7 +66,7 @@
                 </form>
 
                 <div class="auth-links">
-                    <a href="{{ route('welcome') }}" class="back">Back</a>
+                    <a href="{{ route('welcome.create') }}" class="back">Back</a>
                     <a href="{{ route('register.create') }}" class="auth-text-link">Create an account</a>
                     <a class="auth-text-link" href="{{ route('admin-login') }}">Admin Login</a>
                 </div>

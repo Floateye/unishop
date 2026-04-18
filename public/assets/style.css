@@ -1244,9 +1244,11 @@ header {
     }
 
     .section-title h2 {
+        margin-top: 1rem;
         font-size: 2.4rem;
     }
 
+    /* welcome from here on */
     .welcome-panel {
         margin-top: 4rem;
         padding: 2rem 1.5rem;
