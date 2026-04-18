@@ -32,7 +32,7 @@
                         <span>Save your contact and shipping details</span>
                     </div>
                     <div class="auth-highlight">
-                        <i class="fas fa-shirt"></i>
+                        <i class="fas fa-shopping-bag"></i>
                         <span>Continue directly into the UniShop storefront</span>
                     </div>
                 </div>

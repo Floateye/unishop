@@ -79,7 +79,7 @@
     <script>
         function handleLogin(e) {
             e.preventDefault();
-            window.location.href = '{{ route('admin.index') }}';
+            window.location.href = '{{ route('dashboard') }}';
         }
     </script>
 </x-guest-layout>
