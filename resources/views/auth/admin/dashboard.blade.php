@@ -19,7 +19,7 @@
                 <li><a href="#add-product"><i class="fas fa-plus"></i> New Product</a></li>
                 <li><a href="#manage"><i class="fas fa-boxes"></i> Inventory</a></li>
                 <li><a href="#orders"><i class="fas fa-receipt"></i> Orders</a></li>
-                <li><a href="{{ route('store') ?? '#' }}"><i class="fas fa-store"></i> Visit Shop</a></li>
+                <li><a href="{{ route('products.index') ?? '#' }}"><i class="fas fa-store"></i> Visit Shop</a></li>
             </ul>
         </div>
     </header>

@@ -17,7 +17,7 @@ Route::get('/register', [RegisterController::class, 'create'])->name('register.c
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 Route::post('/admin-login',[AdminLoginController::class,'store'])->name('admin-login.store');
 Route::get('/admin-login',[AdminLoginController::class,'create'])->name('admin-login.create');
-Route::get('/contact', [ContactController::class])->name('contact');
+Route::get('/contact', ContactController::class)->name('contact');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/dashboard', [DashboardController::class])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->name('dashboard');

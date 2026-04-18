@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #f4f4f4;
@@ -1470,4 +1474,27 @@ header {
     color: #000000;
     box-shadow: #5db6dc 0px 4px 15px;
     transform: translateY(-3px);
+}
+
+.auth-icon-red {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f7d5d5;
+    color: #851010;
+    font-size: 1.6rem;
+}
+
+.auth-error {
+    background: rgba(255, 77, 77, 0.15);
+    border-left: 4px solid #ff4d4d;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    color: #000000;
+    font-weight: 500;
+    border-radius: 4px;
 }

@@ -48,7 +48,7 @@
                     @csrf
                     @if ($errors->any())
                         <div class="auth-error">
-                            {{ $errors->first('email') ?? $errors->first('password') }}
+                            {{ $errors->first() }}
                         </div>
                     @endif
 
