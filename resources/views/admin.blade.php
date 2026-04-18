@@ -38,7 +38,7 @@
                         <h3>Total Products</h3>
                         <strong>150</strong>
                     </div>
-                </div>
+                </div> <!-- inline was more convenient for this specific kind of styling... -->
                 <div class="admin-stat-card" style="background: linear-gradient(135deg, #108579 0%, #03342c 100%);">
                     <i class="fas fa-shopping-bag"></i>
                     <div class="admin-stat-info">
@@ -101,7 +101,7 @@
                         <textarea id="description" name="description" rows="4" placeholder="Enter product details..." required></textarea>
                     </div>
 
-                    <div class="admin-form-actions"> 
+                    <div class="admin-form-actions" style="margin-top: 1rem;"> 
                         <button type="button" class="auth-submit"><i class="fas fa-save"></i> Save Product to Database</button> <!-- to the database it goes! -->
                     </div>
                 </form>
