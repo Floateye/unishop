@@ -1471,3 +1471,16 @@ header {
     box-shadow: #5db6dc 0px 4px 15px;
     transform: translateY(-3px);
 }
+
+.auth-icon-red {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f7d5d5;
+    color: #851010;
+    font-size: 1.6rem;
+}
