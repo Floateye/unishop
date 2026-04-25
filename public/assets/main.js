@@ -1,7 +1,3 @@
-
-
-
-
 function toggleCart() { //toggle the cart
     const cartModal = document.querySelector('.cart-modal');
     cartModal.classList.toggle('active');
@@ -272,5 +268,4 @@ document.addEventListener('DOMContentLoaded', function () { // Click outside of 
         });
     });
 });
-
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 50)->unique();
+            $table->string('code', 8)->nullable()->unique();
             $table->string('type');
-            $table->decimal('value', 10, 2);
+            $table->decimal('rate', 5, 4);
             $table->dateTime('starts_at');
             $table->dateTime('expires_at');
             $table->boolean('is_active')->default(true);
