@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable = [
+        'name',
+        'price',
+        'description',
+        'image',
+        'quantity',
+        'category_id',
+        'slug',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -21,11 +31,6 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function discounts()
-    {
-        return $this->belongsToMany(Discount::class, 'product_discounts')
-            ->withTimestamps();
-    }
 
     public function admins()
     {

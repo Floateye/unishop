@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderInvoiceController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
@@ -20,4 +23,18 @@ Route::get('/admin-login',[AdminLoginController::class,'create'])->name('admin-l
 Route::get('/contact', ContactController::class)->name('contact');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+Route::get('/discount/create' , [DiscountController ::class, 'create'])->name('discount.create');
+
+
+
+
+
+
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('orders/{order}/invoice', OrderInvoiceController::class)->name('orders.invoice');

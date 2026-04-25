@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\UserRole;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +30,8 @@ class RegisterController extends Controller
             'address' => $validated['address'],
             'city' => $validated['city'],
         ]);
+
+        $user->assignRole(UserRole::Customer->value);
 
         auth()->login($user);
 

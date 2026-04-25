@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_discounts')
-            ->withTimestamps();
-    }
+    protected $casts = [
+        'starts_at'  => 'datetime',
+        'expires_at' => 'datetime',
+    ];
 }
