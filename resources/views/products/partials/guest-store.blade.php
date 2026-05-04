@@ -31,6 +31,32 @@
         </div>
 
     </section>
+
+    <!-- product modal -->
+    <div class="product-modal" id="product-modal">
+        <div class="product-modal-content">
+            <button class="close-modal-btn" onclick="closeProductModal()"><i class="fa fa-times"></i></button>
+            <div class="product-modal-body">
+                <img id="modal-product-image" src="" alt="Product Image">
+                <div class="product-modal-details">
+                    <h2 id="modal-product-title"></h2>
+                    <p class="product-category" id="modal-product-category"></p>
+                    <div class="product-price" id="modal-product-price"></div>
+                    <p id="modal-product-description" class="product-description" style="margin-bottom: 1.5rem; line-height: 1.6;"></p>
+                    
+                    <div class="size-selection" id="modal-size-container" style="display: none;">
+                        <h4>Select Size</h4>
+                        <div class="product-sizes" id="modal-size-options">
+                            <!-- size buttons injected here -->
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart" id="modal-add-to-cart" onclick="">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- cart blade insertion here :D -->
     <x-store-cart />
 

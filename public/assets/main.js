@@ -29,6 +29,7 @@ const products = [{
     price: 59.99,
     image: "/assets/img/tshirt.webp",
     size: ["S", "M", "L", "XL"],
+    description: "Show your university pride with our premium cotton IAU T-Shirt. Comfortable, durable, and stylish for everyday wear."
 },
 {
     id: 2,
@@ -37,6 +38,7 @@ const products = [{
     price: 59.99,
     image: "/assets/img/tshirt.webp",
     size: ["S", "M", "L", "XL"],
+    description: "Stay warm and cozy with the official IAU Hoodie. Made with high-quality fleece and featuring an embroidered logo."
 },
 {
     id: 3,
@@ -45,6 +47,7 @@ const products = [{
     price: 59.99,
     image: "/assets/img/tshirt.webp",
     size: [""],
+    description: "Complete your look with the adjustable IAU Cap. Designed for comfort and sun protection with a sleek embroidered crest."
 },
 {
     id: 4,
@@ -53,22 +56,85 @@ const products = [{
     price: 59.99,
     image: "/assets/img/tshirt.webp",
     size: [""],
+    description: "Start your morning right with the ceramic IAU Coffee Mug. Microwave safe and holds up to 12oz of your favorite beverage."
 }];
 let cart = []; // shopping cart array
 let currentPaymentMethod = 'credit'; // current selected payment method
 
-function renderProducts(productToRender = products) { /* shopping cart templates - DO NOT EDIT THIS PLEASE !!!!!!  */
+function renderProducts(productToRender = products) {
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = productToRender.map(product => ` <div class="product-card" data-category="${product.category}">
+    if (!grid) return;
+    grid.innerHTML = productToRender.map(product => ` <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
              <img src="${product.image}" alt="${product.title}"><!-- product image -->
              <div class="product-info">
                 <h3 class = "product-title">${product.title}</h3>
                 <p class="product-category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
                 <div class="product-price">${product.price} SAR</div>
              </div>
-                <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal(${product.id})">View Details</button>
                 </div>`).join(''); // clear existing products
 }// render products to the page
+
+let currentSelectedProduct = null;
+let currentSelectedSize = null;
+
+function openProductModal(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    currentSelectedProduct = product;
+    currentSelectedSize = null;
+
+    document.getElementById('modal-product-image').src = product.image;
+    document.getElementById('modal-product-image').alt = product.title;
+    document.getElementById('modal-product-title').textContent = product.title;
+    document.getElementById('modal-product-category').textContent = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    document.getElementById('modal-product-price').textContent = `${product.price} SAR`;
+    document.getElementById('modal-product-description').textContent = product.description || '';
+
+    const sizeContainer = document.getElementById('modal-size-container');
+    const sizeOptions = document.getElementById('modal-size-options');
+
+    if (product.size && product.size.length > 0 && product.size[0] !== "") {
+        sizeContainer.style.display = 'block';
+        sizeOptions.innerHTML = product.size.map(s =>
+            `<button class="size-btn" onclick="selectProductSize(this, '${s}')">${s}</button>`
+        ).join('');
+    } else {
+        sizeContainer.style.display = 'none';
+        currentSelectedSize = 'N/A';
+    }
+
+    const addToCartBtn = document.getElementById('modal-add-to-cart');
+    addToCartBtn.onclick = function () {
+        if (currentSelectedSize === null && product.size && product.size[0] !== "") {
+            alert('Please select a size first.');
+            return;
+        }
+        addToCart(product.id);
+        const text = addToCartBtn.textContent;
+        addToCartBtn.innerHTML = `<i class="fas fa-check"></i> Added!`;
+        addToCartBtn.style.background = "#28a745";
+        setTimeout(() => {
+            addToCartBtn.innerHTML = text;
+            addToCartBtn.style.background = "";
+            closeProductModal();
+        }, 1000);
+    };
+
+    document.getElementById('product-modal').classList.add('active');
+}
+
+function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('active');
+}
+
+function selectProductSize(btnElement, size) {
+    currentSelectedSize = size;
+    const buttons = document.getElementById('modal-size-options').querySelectorAll('.size-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+}
 function filterProducts(category) { // filter products by category!!!!
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); // remove active class from all buttons
     event.target.classList.add('active');
@@ -254,6 +320,17 @@ document.addEventListener('DOMContentLoaded', function () { // Click outside of 
             }
         });
     }
+
+    const productModal = document.getElementById('product-modal');
+    if (productModal) {
+        productModal.addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeProductModal();
+            }
+        });
+    }
+
+
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) { // smooth scrolling
