@@ -48,13 +48,16 @@ class OrderController extends Controller
             }
         }
 
-        DB::transaction(function () use ($validated, $total) {
+        $createdOrder = null;
+
+        DB::transaction(function () use ($validated, $total, &$createdOrder) {
             $order = Order::create([
                 'user_id'           => auth()->id(),
                 'shipping_snapshot' => $validated['shipping'],
                 'total_amount'      => $total,
                 'payment_status'    => 'unpaid',
             ]);
+            $createdOrder = $order;
 
             foreach ($validated['items'] as $item) {
                 $product = Product::findOrFail($item['id']);
@@ -72,6 +75,9 @@ class OrderController extends Controller
             }
         });
 
-        return response()->json(['message' => 'Order placed successfully!'], 201);
+        return response()->json([
+            'message' => 'Order placed successfully!',
+            'order_id' => $createdOrder->id
+        ], 201);
     }
 }

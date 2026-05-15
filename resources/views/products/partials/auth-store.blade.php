@@ -110,6 +110,7 @@
         const isAuthenticated = true;
         const csrfToken = '{{ csrf_token() }}';
         const profilePictureUploadUrl = '{{ route('profile.picture') }}';
+        cart = @json($dbCart ?? []);
     </script>
 
 </x-guest-layout>

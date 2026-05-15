@@ -29,7 +29,8 @@ class ProductUpdateRequest extends FormRequest
             'price' =>['nullable','numeric'],
             'image' =>['nullable','image','mimes:jpeg,png,jpg'],
             'quantity' =>['nullable','numeric','min:1'],
-            'size' =>['nullable','string','max:200'],
+            'size' =>['nullable','array'],
+            'size.*' =>['string','in:XS,S,M,L,XL,XXL'],
             'description' =>['nullable','string','max:255'],
         ];
     }

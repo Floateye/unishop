@@ -192,6 +192,20 @@ function filterProducts(category) {
     renderProducts(filtered);
 }
 
+function syncCart() {
+    if (typeof isAuthenticated !== 'undefined' && isAuthenticated) {
+        fetch('/cart/sync', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ cart: cart })
+        }).catch(err => console.error("Failed to sync cart:", err));
+    }
+}
+
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     const existingItem = cart.find(item => item.id === productId);
@@ -202,12 +216,14 @@ function addToCart(productId) {
     }
     updateCartCount();
     renderCartItems();
+    syncCart();
 }
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     updateCartCount();
     renderCartItems();
+    syncCart();
 }
 
 function updateQuantity(productId, change) {
@@ -219,6 +235,7 @@ function updateQuantity(productId, change) {
         } else {
             updateCartCount();
             renderCartItems();
+            syncCart();
         }
     }
 }
@@ -358,10 +375,10 @@ function processOrder(event) {
         if (!res.ok) throw new Error(data.message || 'Order failed.');
         return data;
     })
-    .then(() => {
-        alert('Order placed successfully!');
+    .then(data => {
         savePurchaseToCookie([...cart], parseFloat((subtotal - discountAmount).toFixed(2)));
         cart = [];
+        syncCart();
         appliedDiscount = null;
         const codeInput = document.getElementById('discountCodeInput');
         if (codeInput) codeInput.value = '';
@@ -373,6 +390,13 @@ function processOrder(event) {
         event.target.reset();
         placeOrderBtn.innerHTML = '<i class="fas fa-rocket"></i> Place Order';
         placeOrderBtn.disabled = false;
+        
+        // Redirect to order confirmation/invoice page
+        if (data && data.order_id) {
+            window.location.href = `/orders/${data.order_id}/invoice`;
+        } else {
+            alert('Order placed successfully!');
+        }
     })
     .catch(err => {
         alert('Error: ' + err.message);
@@ -540,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts();
     }
     updateCartCount();
+    renderCartItems();
 });
 
 document.addEventListener('DOMContentLoaded', function () {

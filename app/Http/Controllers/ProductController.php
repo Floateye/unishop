@@ -17,7 +17,27 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->get();
-        return view('products.index', compact('products'));
+        $dbCart = [];
+        if (auth()->check()) {
+            $cart = \App\Models\Cart::where('user_id', auth()->id())->where('is_open', true)->first();
+            if ($cart) {
+                foreach ($cart->items as $item) {
+                    $p = clone $item->product;
+                    $p->quantity = $item->quantity;
+                    $dbCart[] = [
+                        'id' => $p->id,
+                        'title' => $p->name,
+                        'category' => $p->category ? strtolower($p->category->name) : 'other',
+                        'price' => (float) $p->price,
+                        'image' => $p->image ? asset('storage/' . $p->image) : '/assets/img/tshirt.webp',
+                        'description' => $p->description,
+                        'size' => $p->size ?? [],
+                        'quantity' => $item->quantity
+                    ];
+                }
+            }
+        }
+        return view('products.index', compact('products', 'dbCart'));
     }
     public function store(ProductStoreRequest $request)
     {
@@ -68,14 +88,32 @@ class ProductController extends Controller
 
         Gate::authorize(PermissionType::ProductEdit);
 
+        $categories = \App\Models\Category::all();
+
         return view('products.edit', [
-            'product' => $product
+            'product' => $product,
+            'categories' => $categories
         ]);
     }
     public function update( ProductUpdateRequest $request, Product $product){
 
 
         $attributes = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $attributes['image'] = $request->file('image')->store('img', 'public');
+        }
+
+        if ($request->has('size')) {
+            $attributes['size'] = $request->input('size', []);
+        } else {
+        //we explicitly set it to empty array if 'size' is not present in the request.
+            $attributes['size'] = [];
+        }
+
+        if ($request->has('name')) {
+            $attributes['slug'] = Str::slug($request->name);
+        }
 
         $product->update($attributes);
 

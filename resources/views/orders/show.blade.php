@@ -60,7 +60,9 @@
                                              alt="{{ $item->product->name }}"
                                              class="admin-tbl-img">
                                     @else
-                                        <div class="admin-tbl-img-placeholder"><i class="fas fa-image"></i></div>
+                                        <img src="{{ asset('assets/img/tshirt.webp') }}"
+                                             alt="{{ $item->product->name }}"
+                                             class="admin-tbl-img">
                                     @endif
                                 </td>
                                 <td>
@@ -99,7 +101,7 @@
             </div>
             <div class="divider"></div>
             <div class="order-snapshot-grid">
-                @foreach(json_decode($order->shipping_snapshot, true) as $key => $value)
+                @foreach(is_array($order->shipping_snapshot) ? $order->shipping_snapshot : json_decode($order->shipping_snapshot, true) ?? [] as $key => $value)
                     <div class="order-snapshot-item">
                         <span class="order-snapshot-label">{{ ucwords(str_replace('_', ' ', $key)) }}</span>
                         <span class="order-snapshot-value">{{ $value }}</span>

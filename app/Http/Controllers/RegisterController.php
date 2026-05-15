@@ -26,7 +26,7 @@ class RegisterController extends Controller
             'password'   => Hash::make($validated['password']),
         ]);
 
-        $user->address()->create([
+        $user->addresses()->create([
             'phone' => $validated['phone'],
             'address' => $validated['address'],
             'city' => $validated['city'],

@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 
@@ -28,6 +29,7 @@ Route::get('/contact', ContactController::class)->name('contact');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
@@ -54,3 +56,15 @@ Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->na
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('orders/{order}/invoice', OrderInvoiceController::class)->name('orders.invoice');
+
+// Cart Sync
+Route::post('/cart/sync', [CartController::class, 'sync'])->name('cart.sync')->middleware('auth');
+
+// Serve storage files fallback (useful on Windows/XAMPP if symlinks are not supported)
+Route::get('/storage/{path}', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    }
+    abort(404);
+})->where('path', '.*')->name('storage.fallback');

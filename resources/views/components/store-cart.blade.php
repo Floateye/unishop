@@ -101,17 +101,17 @@
                                 <div class="form-group">
                                     <label for="cardNumber">Card Number</label>
                                     <input type="text" id="cardNumber" name="cardNumber"
-                                           placeholder="1234 5678 9012 3456" required>
+                                           placeholder="1234 5678 9012 3456" maxlength="19" pattern="(\d{4}\s?){3}\d{4}" title="16 digit card number" required>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="expiryDate">Expiry Date</label>
                                         <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY"
-                                               required>
+                                               maxlength="5" pattern="(0[1-9]|1[0-2])\/\d{2}" title="MM/YY format" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="cvv">CVV</label>
-                                        <input type="text" id="cvv" name="cvv" required>
+                                        <input type="text" id="cvv" name="cvv" maxlength="4" pattern="\d{3,4}" title="3 or 4 digit CVV" required>
                                     </div>
                                 </div>
 

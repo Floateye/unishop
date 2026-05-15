@@ -8,6 +8,10 @@ class Order extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'shipping_snapshot' => 'json',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
