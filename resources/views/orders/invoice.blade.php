@@ -20,7 +20,9 @@
                                 @if($item->product->image)
                                     <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                 @else
-                                    <img src="{{ asset('assets/img/tshirt.webp') }}" alt="{{ $item->product->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    <div style="width: 50px; height: 50px; background: #eaeaea; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                                        <i class="fas fa-image" style="color: #999;"></i>
+                                    </div>
                                 @endif
                                 <div>
                                     <strong style="color: #333; display: block;">{{ $item->product->name }}</strong>

@@ -60,9 +60,7 @@
                                              alt="{{ $item->product->name }}"
                                              class="admin-tbl-img">
                                     @else
-                                        <img src="{{ asset('assets/img/tshirt.webp') }}"
-                                             alt="{{ $item->product->name }}"
-                                             class="admin-tbl-img">
+                                        <div class="admin-tbl-img-placeholder"><i class="fas fa-image"></i></div>
                                     @endif
                                 </td>
                                 <td>
