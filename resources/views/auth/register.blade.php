@@ -53,9 +53,15 @@
                         </div>
                     @endif
 
-                    <div class="auth-field">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter your full name" required>
+                    <div class="auth-field auth-field-split">
+                        <div>
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="Enter your first name" required>
+                        </div>
+                        <div>
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="Enter your last name" required>
+                        </div>
                     </div>
 
                     <div class="auth-field">

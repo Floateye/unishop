@@ -1,7 +1,55 @@
+// ===================== PAST PURCHASES COOKIE =====================
+
+function savePurchaseToCookie(items, total) {
+    const purchase = {
+        date: new Date().toLocaleDateString(),
+        items: items.map(i => ({ title: i.title, qty: i.quantity, price: i.price })),
+        total: total,
+    };
+    let history = getPastPurchases();
+    history.unshift(purchase);
+    if (history.length > 5) history = history.slice(0, 5);
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+    document.cookie = `past_purchases=${encodeURIComponent(JSON.stringify(history))}; expires=${expiry.toUTCString()}; path=/`;
+}
+
+function getPastPurchases() {
+    const match = document.cookie.match(/(?:^|;\s*)past_purchases=([^;]+)/);
+    if (!match) return [];
+    try { return JSON.parse(decodeURIComponent(match[1])); } catch { return []; }
+}
+
+function renderPastPurchases() {
+    const section = document.getElementById('pastPurchasesSection');
+    const list = document.getElementById('pastPurchasesList');
+    if (!section || !list) return;
+    const past = getPastPurchases();
+    if (past.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    list.innerHTML = past.map(p => `
+        <div class="past-purchase-item">
+            <div class="past-purchase-date">${p.date} &mdash; <strong>${p.total.toFixed ? p.total.toFixed(2) : p.total} SAR</strong></div>
+            <div class="past-purchase-items">${p.items.map(i => `${i.qty}&times; ${escapeHtml(i.title)}`).join(', ')}</div>
+        </div>
+    `).join('');
+}
+
+function togglePastPurchases() {
+    const list = document.getElementById('pastPurchasesList');
+    const chevron = document.getElementById('pastPurchasesChevron');
+    if (!list) return;
+    const open = list.style.display === 'none';
+    list.style.display = open ? 'block' : 'none';
+    if (chevron) chevron.style.transform = open ? 'rotate(180deg)' : '';
+}
+
 function toggleCart() { //toggle the cart
     const cartModal = document.querySelector('.cart-modal');
     cartModal.classList.toggle('active');
-
+    if (cartModal.classList.contains('active')) {
+        renderPastPurchases();
+    }
 }
 
 function selectPaymentMethod(method) { // select payment method in checkout form
@@ -22,61 +70,48 @@ function selectPaymentMethod(method) { // select payment method in checkout form
         }
     }
 }
-const products = [{
-    id: 1,
-    title: "Premium IAU T-Shirt",
-    category: "clothes",
-    price: 59.99,
-    image: "/assets/img/tshirt.webp",
-    size: ["S", "M", "L", "XL"],
-    description: "Show your university pride with our premium cotton IAU T-Shirt. Comfortable, durable, and stylish for everyday wear."
-},
-{
-    id: 2,
-    title: "Premium IAU Hoodie",
-    category: "clothes",
-    price: 59.99,
-    image: "/assets/img/tshirt.webp",
-    size: ["S", "M", "L", "XL"],
-    description: "Stay warm and cozy with the official IAU Hoodie. Made with high-quality fleece and featuring an embroidered logo."
-},
-{
-    id: 3,
-    title: "Premium IAU Cap",
-    category: "accessories",
-    price: 59.99,
-    image: "/assets/img/tshirt.webp",
-    size: [""],
-    description: "Complete your look with the adjustable IAU Cap. Designed for comfort and sun protection with a sleek embroidered crest."
-},
-{
-    id: 4,
-    title: "Premium IAU Mug",
-    category: "souvenirs",
-    price: 59.99,
-    image: "/assets/img/tshirt.webp",
-    size: [""],
-    description: "Start your morning right with the ceramic IAU Coffee Mug. Microwave safe and holds up to 12oz of your favorite beverage."
-}];
-let cart = []; // shopping cart array
-let currentPaymentMethod = 'credit'; // current selected payment method
 
-function renderProducts(productToRender = products) {
+// products is injected by Blade in each store partial
+let cart = [];
+let currentPaymentMethod = 'credit';
+let appliedDiscount = null; // { code, rate, description }
+
+function renderProducts(productToRender) {
+    if (typeof products === 'undefined') return;
+    const toRender = productToRender !== undefined ? productToRender : products;
     const grid = document.getElementById('productGrid');
     if (!grid) return;
-    grid.innerHTML = productToRender.map(product => ` <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
-             <img src="${product.image}" alt="${product.title}"><!-- product image -->
-             <div class="product-info">
-                <h3 class = "product-title">${product.title}</h3>
+    if (toRender.length === 0) {
+        grid.innerHTML = '<p style="text-align:center;color:#4b4b4b;padding:2rem;">No products found.</p>';
+        return;
+    }
+    grid.innerHTML = toRender.map(product => {
+        const desc = product.description
+            ? `<p class="product-card-desc">${escapeHtml(product.description.length > 80 ? product.description.substring(0, 80) + '…' : product.description)}</p>`
+            : '';
+
+        const hasSizes = Array.isArray(product.size) && product.size.length > 0 && product.size[0] !== '';
+        const sizePills = hasSizes
+            ? `<div class="product-card-sizes">${product.size.map(s => `<span class="product-card-size-pill">${escapeHtml(s)}</span>`).join('')}</div>`
+            : '';
+
+        return `<div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
+            <img src="${product.image}" alt="${escapeHtml(product.title)}">
+            <div class="product-info">
+                <h3 class="product-title">${escapeHtml(product.title)}</h3>
                 <p class="product-category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+                ${desc}
+                ${sizePills}
                 <div class="product-price">${product.price} SAR</div>
-             </div>
-                <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal(${product.id})">View Details</button>
-                </div>`).join(''); // clear existing products
-}// render products to the page
+            </div>
+            <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal(${product.id})">View Details</button>
+        </div>`;
+    }).join('');
+}
 
 let currentSelectedProduct = null;
 let currentSelectedSize = null;
+let currentReviewRating = 0;
 
 function openProductModal(productId) {
     const product = products.find(p => p.id === productId);
@@ -84,6 +119,7 @@ function openProductModal(productId) {
 
     currentSelectedProduct = product;
     currentSelectedSize = null;
+    currentReviewRating = 0;
 
     document.getElementById('modal-product-image').src = product.image;
     document.getElementById('modal-product-image').alt = product.title;
@@ -122,7 +158,20 @@ function openProductModal(productId) {
         }, 1000);
     };
 
+    // Reset review form if present
+    const ratingEl = document.getElementById('starInput');
+    if (ratingEl) {
+        setRating(0);
+    }
+    const bodyEl = document.getElementById('reviewBody');
+    if (bodyEl) bodyEl.value = '';
+    const msgEl = document.getElementById('reviewMsg');
+    if (msgEl) msgEl.textContent = '';
+
     document.getElementById('product-modal').classList.add('active');
+
+    // Load reviews
+    loadReviews(productId);
 }
 
 function closeProductModal() {
@@ -135,67 +184,62 @@ function selectProductSize(btnElement, size) {
     buttons.forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
 }
-function filterProducts(category) { // filter products by category!!!!
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); // remove active class from all buttons
-    event.target.classList.add('active');
 
-    const filterProducts = category === 'all' ? products : products.filter(p => p.category === category); // filter products based on category
-    renderProducts(filterProducts); // render filtered products
+function filterProducts(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+    renderProducts(filtered);
 }
 
-function addToCart(productId) { // add product to cart
+function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     const existingItem = cart.find(item => item.id === productId);
     if (existingItem) {
-        existingItem.quantity += 1; // increase that quantityyyy
+        existingItem.quantity += 1;
     } else {
-        cart.push({ ...product, quantity: 1 }); // add new item to cart
+        cart.push({ ...product, quantity: 1 });
     }
     updateCartCount();
-    renderCartItems(); // update cart display
-
-    const button = event.target;
-    const text = button.textContent;
-    button.innerHTML = `<i class="fas fa-check"></i> Added!`;
-    button.style.background = "#28a745"; // change button color to green
-    setTimeout(() => { // reset button after 1 seconds
-        button.innerHTML = text;
-        button.style.background = ""; // reset button color
-    }, 1000); // disable the button after adding to cart
+    renderCartItems();
 }
-function removeFromCart(productId) { // remove product from cart
+
+function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     updateCartCount();
-    renderCartItems(); // update cart display
+    renderCartItems();
 }
-function updateQuantity(productId, change) { // update quantity of a cart item
+
+function updateQuantity(productId, change) {
     const item = cart.find(item => item.id === productId);
     if (item) {
         item.quantity += change;
         if (item.quantity <= 0) {
-            removeFromCart(productId); // remove item if quantity is 0 or less
+            removeFromCart(productId);
         } else {
-            updateCartCount(); // update cart display
+            updateCartCount();
             renderCartItems();
         }
     }
+}
 
-}
-function updateCartCount() { // update cart item count in the header
+function updateCartCount() {
     const count = cart.reduce((total, item) => total + item.quantity, 0);
-    document.getElementById('cartCount').textContent = count;
+    const el = document.getElementById('cartCount');
+    if (el) el.textContent = count;
 }
-function renderCartItems() { // render cart items in the cart modal
+
+function renderCartItems() {
     const cartItems = document.getElementById('cartItems');
     const cartTotal = document.getElementById('cartTotal');
 
-    if (cart.length === 0) { // EMPTY! DONT SHOW ANYTHING
+    if (cart.length === 0) {
         cartItems.innerHTML = `<div class="empty-cart">
                         <div class="empty-cart-logo"><i class="fa fa-shopping-cart"></i></div>
                         <p>Your cart is empty</p>
                     </div>
                     `;
-        cartTotal.style.display = 'none'; // hide total price
+        cartTotal.style.display = 'none';
         return;
     }
     cartItems.innerHTML = cart.map(item => `
@@ -211,81 +255,297 @@ function renderCartItems() { // render cart items in the cart modal
         </div>
     </div>
 `).join('');
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    document.getElementById('totalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
-    document.getElementById('checkoutTotalPrice').textContent = `Total: ${total.toFixed(2)}SAR`;
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discountAmount = appliedDiscount ? subtotal * appliedDiscount.rate : 0;
+    const finalTotal = subtotal - discountAmount;
+
+    const totalEl = document.getElementById('totalPrice');
+    if (discountAmount > 0) {
+        totalEl.innerHTML =
+            `<span style="text-decoration:line-through;opacity:0.55;font-size:0.9em">${subtotal.toFixed(2)} SAR</span>` +
+            `<span style="color:#2ecc71;font-size:0.8rem;display:block"> ${appliedDiscount.description}</span>` +
+            `<strong>${finalTotal.toFixed(2)} SAR</strong>`;
+    } else {
+        totalEl.textContent = `Total: ${finalTotal.toFixed(2)} SAR`;
+    }
+    document.getElementById('checkoutTotalPrice').textContent = `Total: ${finalTotal.toFixed(2)} SAR`;
     cartTotal.style.display = 'block';
 }
-function showCheckout() {
 
+function showCheckout() {
     document.getElementById('cartItems').style.display = 'none';
     document.getElementById('cartTotal').style.display = 'none';
     document.getElementById('checkoutForm').classList.add('active');
 }
 
 function hideCheckout() {
-
     document.getElementById('cartItems').style.display = 'block';
     document.getElementById('cartTotal').style.display = 'block';
     document.getElementById('checkoutForm').classList.remove('active');
 }
 
-function processOrder(event) { // process the order when checkout form is submitted
-    event.preventDefault();
+function applyDiscount() {
+    const code = (document.getElementById('discountCodeInput')?.value || '').trim();
+    const msgEl = document.getElementById('discountMsg');
+    if (!code) { if (msgEl) { msgEl.textContent = 'Enter a discount code.'; msgEl.className = 'discount-msg error'; } return; }
 
-    if (cart.length === 0) {
+    if (msgEl) { msgEl.textContent = 'Checking…'; msgEl.className = 'discount-msg'; }
+
+    fetch('/discount/apply?code=' + encodeURIComponent(code), {
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.valid) {
+            appliedDiscount = { code: data.code, rate: data.rate, description: data.description };
+            if (msgEl) { msgEl.textContent = 'Applied: ' + data.description; msgEl.className = 'discount-msg success'; }
+            renderCartItems();
+        } else {
+            appliedDiscount = null;
+            if (msgEl) { msgEl.textContent = data.message || 'Invalid code.'; msgEl.className = 'discount-msg error'; }
+            renderCartItems();
+        }
+    })
+    .catch(() => {
+        if (msgEl) { msgEl.textContent = 'Could not validate code.'; msgEl.className = 'discount-msg error'; }
+    });
+}
+
+function processOrder(event) {
+    event.preventDefault();
+    if (cart.length === 0) return;
+
+    if (!isAuthenticated) {
+        alert('Please log in to place an order.');
         return;
     }
-    // by now here should have the process to the database,,, ;ppp
-    const formData = new FormData(event.target);
-    const orderData = {
-        item: cart,
-        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-        customer: {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            mobile: formData.get('mobile')
-        },
-        shipping: {
-            address: formData.get('address'),
-            address2: formData.get('address2'),
-            city: formData.get('city'),
-            zip: formData.get('zip'),
-            state: formData.get('state'),
-            country: formData.get('country')
-        },
-        payment: {
-            method: currentPaymentMethod,
-            cardNumber: formData.get('cardNumber'),
-            expiry: formData.get('expiry'),
-            cvv: formData.get('cvv')
-        }
-    };
-    const placeOrderBtn = document.querySelector('.place-order-btn');
-    placeOrderBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
-    placeOrderBtn.disabled = true; // disable the button to prevent multiple submissions
-    setTimeout(() => {
-        alert('Order placed successfully!');
 
-        cart = []; // clear the cart
+    const formData = new FormData(event.target);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discountAmount = appliedDiscount ? subtotal * appliedDiscount.rate : 0;
+    const orderData = {
+        items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
+        total: parseFloat((subtotal - discountAmount).toFixed(2)),
+        discount_code: appliedDiscount ? appliedDiscount.code : null,
+        shipping: {
+            name:     formData.get('name'),
+            email:    formData.get('email'),
+            mobile:   formData.get('mobile'),
+            address:  formData.get('address'),
+            address2: formData.get('address2'),
+            city:     formData.get('city'),
+            zip:      formData.get('zip'),
+            state:    formData.get('state'),
+            country:  formData.get('country'),
+        },
+    };
+
+    const placeOrderBtn = document.querySelector('.place-order-btn');
+    placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    placeOrderBtn.disabled = true;
+
+    fetch('/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+    })
+    .then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Order failed.');
+        return data;
+    })
+    .then(() => {
+        alert('Order placed successfully!');
+        savePurchaseToCookie([...cart], parseFloat((subtotal - discountAmount).toFixed(2)));
+        cart = [];
+        appliedDiscount = null;
+        const codeInput = document.getElementById('discountCodeInput');
+        if (codeInput) codeInput.value = '';
+        const discountMsg = document.getElementById('discountMsg');
+        if (discountMsg) { discountMsg.textContent = ''; discountMsg.className = 'discount-msg'; }
         updateCartCount();
-        renderCartItems(); // update cart display
+        renderCartItems();
         toggleCart();
         event.target.reset();
-        placeOrderBtn.innerHTML = '<i class="fas fa-check"></i> Place Order';
+        placeOrderBtn.innerHTML = '<i class="fas fa-rocket"></i> Place Order';
         placeOrderBtn.disabled = false;
-    }, 2000); // simulate order processing time
+    })
+    .catch(err => {
+        alert('Error: ' + err.message);
+        placeOrderBtn.innerHTML = '<i class="fas fa-rocket"></i> Place Order';
+        placeOrderBtn.disabled = false;
+    });
 }
-document.addEventListener('DOMContentLoaded', function () { // render products on page load
-    renderProducts();
+
+// ===================== REVIEWS =====================
+
+function loadReviews(productId) {
+    const list = document.getElementById('modal-reviews-list');
+    const avg = document.getElementById('modal-reviews-avg');
+    if (!list) return;
+    list.innerHTML = '<div class="reviews-loading">Loading reviews...</div>';
+    if (avg) avg.innerHTML = '';
+
+    fetch(`/products/${productId}/reviews`)
+        .then(res => res.json())
+        .then(reviews => {
+            if (reviews.length === 0) {
+                list.innerHTML = '<p class="no-reviews">No reviews yet. Be the first to review!</p>';
+                return;
+            }
+            const avgRating = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+            if (avg) avg.innerHTML = renderStarsDisplay(parseFloat(avgRating)) + ` <span class="avg-score">${avgRating} / 5</span> <span class="avg-count">(${reviews.length} review${reviews.length > 1 ? 's' : ''})</span>`;
+
+            list.innerHTML = reviews.map(r => `
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <span class="review-author">
+                            <i class="fas fa-user-circle"></i> ${r.user}
+                            ${r.is_verified ? '<span class="verified-badge" style="color: #1a7a3c; font-size: 0.75rem; margin-left: 5px;"><i class="fas fa-check-circle"></i> Verified Purchase</span>' : ''}
+                        </span>
+                        <span class="review-date">${r.created_at}</span>
+                    </div>
+                    <div class="review-stars">${renderStarsDisplay(r.rating)}</div>
+                    ${r.body ? `<p class="review-body-text">${escapeHtml(r.body)}</p>` : ''}
+                </div>
+            `).join('');
+        })
+        .catch(() => {
+            list.innerHTML = '<p class="no-reviews">Could not load reviews.</p>';
+        });
+}
+
+function renderStarsDisplay(rating) {
+    let html = '<span class="stars-display">';
+    for (let i = 1; i <= 5; i++) {
+        html += `<span class="${i <= rating ? 'star-filled' : 'star-empty'}">&#9733;</span>`;
+    }
+    html += '</span>';
+    return html;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+}
+
+// Star rating input
+function setRating(value) {
+    currentReviewRating = value;
+    const stars = document.querySelectorAll('#starInput .star-btn');
+    stars.forEach((s, i) => {
+        s.classList.toggle('active', i < value);
+    });
+    const el = document.getElementById('starInput');
+    if (el) el.dataset.rating = value;
+}
+
+function submitReview() {
+    if (!currentSelectedProduct) return;
+    const rating = currentReviewRating;
+    const body = document.getElementById('reviewBody').value.trim();
+    const msgEl = document.getElementById('reviewMsg');
+
+    if (rating === 0) { msgEl.textContent = 'Please select a star rating.'; msgEl.className = 'review-msg error'; return; }
+    if (!body) { msgEl.textContent = 'Please enter a review.'; msgEl.className = 'review-msg error'; return; }
+
+    const btn = document.querySelector('.review-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    fetch(`/products/${currentSelectedProduct.id}/reviews`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({ rating, body }),
+    })
+    .then(async res => {
+        const data = await res.json();
+        if (!res.ok) {
+            throw new Error(data.error || 'Something went wrong.');
+        }
+        return data;
+    })
+    .then(() => {
+        msgEl.textContent = 'Review submitted!';
+        msgEl.className = 'review-msg success';
+        setRating(0);
+        document.getElementById('reviewBody').value = '';
+        loadReviews(currentSelectedProduct.id);
+    })
+    .catch(err => {
+        msgEl.textContent = err.message;
+        msgEl.className = 'review-msg error';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Submit Review';
+    });
+}
+
+// ===================== PROFILE =====================
+
+function toggleProfilePopup() {
+    const popup = document.getElementById('profilePopup');
+    if (popup) popup.classList.toggle('active');
+}
+
+function uploadProfilePicture(input) {
+    if (!input.files || !input.files[0]) return;
+    const formData = new FormData();
+    formData.append('profile_picture', input.files[0]);
+
+    fetch(profilePictureUploadUrl, {
+        method: 'POST',
+        headers: { 'X-CSRF-TOKEN': csrfToken },
+        body: formData,
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.url) {
+            // Update all avatar image elements on the page
+            document.querySelectorAll('#profileAvatarImg, #profilePopupImg').forEach(img => {
+                img.src = data.url;
+            });
+            // If it was previously showing an icon, swap to an img tag
+            const iconEl = document.getElementById('profilePopupIcon');
+            if (iconEl) {
+                const img = document.createElement('img');
+                img.src = data.url;
+                img.alt = 'Profile';
+                img.id = 'profilePopupImg';
+                iconEl.replaceWith(img);
+            }
+            const avatarEl = document.querySelector('.profile-avatar');
+            if (avatarEl && !avatarEl.querySelector('img')) {
+                avatarEl.innerHTML = `<img src="${data.url}" alt="Profile" id="profileAvatarImg">`;
+            }
+        }
+    })
+    .catch(() => alert('Failed to upload profile picture.'));
+}
+
+// ===================== DOM READY =====================
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof products !== 'undefined') {
+        renderProducts();
+    }
     updateCartCount();
 });
 
-document.addEventListener('DOMContentLoaded', function () { // render the events n everything now!!
+document.addEventListener('DOMContentLoaded', function () {
     const cardNumberInput = document.getElementById('cardNumber');
     const expiryInput = document.getElementById('expiry');
     const cvvInput = document.getElementById('cvv');
-
 
     if (cardNumberInput) {
         cardNumberInput.addEventListener('input', function (e) {
@@ -311,29 +571,32 @@ document.addEventListener('DOMContentLoaded', function () { // render the events
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () { // Click outside of the cart to leave
+document.addEventListener('DOMContentLoaded', function () {
     const cartModal = document.getElementById('cart-modal');
     if (cartModal) {
         cartModal.addEventListener('click', function (e) {
-            if (e.target === this) {
-                toggleCart();
-            }
+            if (e.target === this) toggleCart();
         });
     }
 
     const productModal = document.getElementById('product-modal');
     if (productModal) {
         productModal.addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeProductModal();
-            }
+            if (e.target === this) closeProductModal();
         });
     }
 
-
+    // Close profile popup when clicking outside
+    document.addEventListener('click', function (e) {
+        const wrapper = document.getElementById('profileWrapper');
+        if (wrapper && !wrapper.contains(e.target)) {
+            const popup = document.getElementById('profilePopup');
+            if (popup) popup.classList.remove('active');
+        }
+    });
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) { // smooth scrolling
+        anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (href !== "#") {
                 const target = document.querySelector(href);
@@ -345,4 +608,3 @@ document.addEventListener('DOMContentLoaded', function () { // Click outside of 
         });
     });
 });
-

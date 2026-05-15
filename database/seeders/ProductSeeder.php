@@ -14,11 +14,11 @@ class ProductSeeder extends Seeder
         $categories = Category::pluck('id', 'name');
 
         $products = [
-            // Cloths
-            ['name' => 'IAU Classic Hoodie',    'price' => 89.99,  'quantity' => 50,  'category' => 'Cloths',      'description' => 'A comfortable IAU-branded hoodie for everyday wear.'],
-            ['name' => 'IAU Polo Shirt',         'price' => 45.00,  'quantity' => 100, 'category' => 'Cloths',      'description' => 'Elegant polo shirt with IAU embroidery on the chest.'],
-            ['name' => 'IAU Varsity Jacket',     'price' => 149.99, 'quantity' => 30,  'category' => 'Cloths',      'description' => 'Premium varsity jacket with IAU branding on the back.'],
-            ['name' => 'IAU Sports T-Shirt',     'price' => 35.00,  'quantity' => 150, 'category' => 'Cloths',      'description' => 'Breathable sports T-shirt for campus activities.'],
+            // Clothes
+            ['name' => 'IAU Classic Hoodie',    'price' => 89.99,  'quantity' => 50,  'category' => 'Clothes',      'description' => 'A comfortable IAU-branded hoodie for everyday wear.', 'size' => ['S', 'M', 'L', 'XL']],
+            ['name' => 'IAU Polo Shirt',         'price' => 45.00,  'quantity' => 100, 'category' => 'Clothes',      'description' => 'Elegant polo shirt with IAU embroidery on the chest.', 'size' => ['S', 'M', 'L', 'XL']],
+            ['name' => 'IAU Varsity Jacket',     'price' => 149.99, 'quantity' => 30,  'category' => 'Clothes',      'description' => 'Premium varsity jacket with IAU branding on the back.', 'size' => ['S', 'M', 'L', 'XL']],
+            ['name' => 'IAU Sports T-Shirt',     'price' => 35.00,  'quantity' => 150, 'category' => 'Clothes',      'description' => 'Breathable sports T-shirt for campus activities.', 'size' => ['S', 'M', 'L', 'XL']],
 
             // Accessories
             ['name' => 'IAU Backpack',           'price' => 120.00, 'quantity' => 40,  'category' => 'Accessories', 'description' => 'Durable backpack with IAU logo and multiple compartments.'],
@@ -41,6 +41,7 @@ class ProductSeeder extends Seeder
                 'quantity' => $data['quantity'],
                 'category_id' => $categories[$data['category']],
                 'description' => $data['description'],
+                'size' => $data['size'] ?? null,
             ]);
         }
     }

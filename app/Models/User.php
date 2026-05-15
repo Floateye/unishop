@@ -18,10 +18,17 @@ class User extends Authenticatable
     use HasFactory, Notifiable,HasRoles  ;
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'profile_picture',
     ];
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     /**
      * Get the attributes that should be cast.

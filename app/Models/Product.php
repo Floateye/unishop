@@ -14,6 +14,11 @@ class Product extends Model
         'quantity',
         'category_id',
         'slug',
+        'size',
+    ];
+
+    protected $casts = [
+        'size' => 'array',
     ];
 
     public function category()
@@ -40,6 +45,6 @@ class Product extends Model
     }
     public function reviews()
     {
-        return $this->belongsToMany(Review::class);
+        return $this->hasMany(Review::class)->latest();
     }
 }

@@ -12,9 +12,24 @@
                     </div>
                 </div>
                 <div class="cart-total" id="cartTotal" style="display: none;">
-                    <div class="total-price" id="totalPrice">Total: $0.00</div>
+                    <div class="total-price" id="totalPrice">Total: 0.00 SAR</div>
+                    <div class="discount-code-row">
+                        <input type="text" id="discountCodeInput" placeholder="Discount code"
+                               class="discount-code-input" maxlength="8" autocomplete="off">
+                        <button type="button" onclick="applyDiscount()" class="discount-apply-btn">Apply</button>
+                    </div>
+                    <div id="discountMsg" class="discount-msg"></div>
                     <button class="checkout-btn" onclick="showCheckout()">Checkout</button>
                 </div>
+                <!-- Past Purchases (from cookie) -->
+                <div id="pastPurchasesSection" style="display:none;" class="past-purchases-section">
+                    <button type="button" class="past-purchases-header" onclick="togglePastPurchases()">
+                        <span><i class="fas fa-history"></i> Recent Purchases</span>
+                        <i class="fas fa-chevron-down" id="pastPurchasesChevron"></i>
+                    </button>
+                    <div id="pastPurchasesList" style="display:none;"></div>
+                </div>
+
                 <div class="checkout-form" id="checkoutForm"> <!-- checkout form -->
                     <h3><i class="fa fa-lock"></i> Checkout</h3>
                     <form onsubmit="processOrder(event)" id="checkoutFormElement"> <!-- form submission -->

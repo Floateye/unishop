@@ -9,14 +9,15 @@ use App\Models\AdminProduct;
 use App\Models\Product;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use App\Models\Review;
 
 class ProductController extends Controller
 {
     //
     public function index()
     {
-
-        return view('products.index');
+        $products = Product::with('category')->get();
+        return view('products.index', compact('products'));
     }
     public function store(ProductStoreRequest $request)
     {
@@ -25,6 +26,8 @@ class ProductController extends Controller
         $image = $request->file('image')->store('img', 'public');
 
 
+        $sizes = $request->input('size', []);
+
         $product = Product::create([
             'category_id' => $request->category_id,
             'name' => $request->name,
@@ -32,6 +35,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
+            'size' => $sizes,
             'image' => $image,
         ]);
 
@@ -43,6 +47,23 @@ class ProductController extends Controller
 
         return redirect()->route('dashboard')->with(['status' => 'Product added successfully!']);
     }
+    public function show(Product $product)
+    {
+        Gate::authorize(PermissionType::DashboardView);
+
+        $reviews = $product->reviews()->with('user')->latest()->get();
+
+        $sentimentCounts = [
+            'positive' => $reviews->where('sentiment', 'positive')->count(),
+            'negative' => $reviews->where('sentiment', 'negative')->count(),
+            'mixed'    => $reviews->where('sentiment', 'mixed')->count(),
+            'neutral'  => $reviews->where('sentiment', 'neutral')->count(),
+            'unknown'  => $reviews->whereNull('sentiment')->count(),
+        ];
+
+        return view('products.show', compact('product', 'reviews', 'sentimentCounts'));
+    }
+
     public function edit(Product $product){
 
         Gate::authorize(PermissionType::ProductEdit);

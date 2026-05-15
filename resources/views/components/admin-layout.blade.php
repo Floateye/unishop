@@ -11,16 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="admin-body">
-<header class="admin-header"> <!-- lets start!! -->
+<header class="admin-header">
     <div class="nav">
-        <div class="logo"><i class="fas fa-shield-alt"></i> UniShop Admin Hub</div>
+        <div class="logo"><i class="fas fa-shield-alt"></i> UniShop Admin</div>
         <ul class="nav-links">
-            <li><a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="{{ route('dashboard') }}#dashboard"><i class="fas fa-chart-pie"></i> Overview</a></li>
             <li><a href="#add-product"><i class="fas fa-plus"></i> New Product</a></li>
-            <li><a href="#manage"><i class="fas fa-boxes"></i> Inventory</a></li>
-            <li><a href="#orders"><i class="fas fa-receipt"></i> Orders</a></li>
-            <li><a href="#discounts"><i class="fas fa-receipt"></i> Discount</a></li>
-            <li><a href="{{ route('products.index') ?? '#' }}"><i class="fas fa-store"></i> Visit Shop</a></li>
+            <li><a href="#manage"><i class="fas fa-warehouse"></i> Inventory</a></li>
+            <li><a href="#orders"><i class="fas fa-file-invoice-dollar"></i> Orders</a></li>
+            <li><a href="#discounts"><i class="fas fa-tag"></i> Discounts</a></li>
+            <li><a href="#reviews"><i class="fas fa-star"></i> Reviews</a></li>
+            <li><a href="#users"><i class="fas fa-users-cog"></i> Users</a></li>
+            <li><a href="{{ route('products.index') }}"><i class="fas fa-store"></i> Visit Shop</a></li>
         </ul>
     </div>
 </header>

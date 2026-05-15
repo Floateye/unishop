@@ -29,6 +29,8 @@ class ProductStoreRequest extends FormRequest
             'price' =>['required','numeric'],
             'image' =>['required','image','mimes:jpeg,png,jpg'],
             'quantity' =>['required','numeric','min:1'],
+            'size' =>['nullable','array'],
+            'size.*' =>['string','in:XS,S,M,L,XL,XXL'],
             'description' =>['nullable','string','max:255'],
         ];
     }

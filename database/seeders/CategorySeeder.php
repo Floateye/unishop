@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     {
 
         $category = [
-            'Cloths' =>'Apparel and wearable items including T-shirts, hoodies, jackets, and other IAU-branded clothing.',
+            'Clothes' =>'Apparel and wearable items including T-shirts, hoodies, jackets, and other IAU-branded clothing.',
             'Accessories' => 'Complementary add-ons such as bags, keychains, caps, lanyards, and other carry-along items.',
             'Souvenirs' => 'Collectible and giftable memorabilia including mugs, frames, stationery, and campus-themed keepsakes'
         ];

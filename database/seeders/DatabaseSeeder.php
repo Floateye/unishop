@@ -27,11 +27,13 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
         ]);
         $user = User::factory()->create([
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
         ]);
         Admin::create([
-            'user_id' => $user->id,
+            'user_id'       => $user->id,
+            'is_supervisor' => true,
         ]);
         $user->assignRole(UserRole::Admin->value);
     }

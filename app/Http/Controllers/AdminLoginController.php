@@ -15,6 +15,11 @@ class AdminLoginController extends Controller
         $validated = $request->validated();
 
         if (auth()->attempt($validated)) {
+            if (!auth()->user()->hasRole('Admin')) {
+                auth()->logout();
+                session()->invalidate();
+                return back()->withErrors(['email' => 'This is a customer account. Please use the customer login page.']);
+            }
             session()->regenerate();
             return redirect()->route('dashboard')->with('success', 'Welcome back!');
         }
