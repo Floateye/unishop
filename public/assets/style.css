@@ -2565,15 +2565,24 @@ a {
 .profile-logout-btn {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0.55rem 1rem;
     font-size: 0.85rem;
+    font-weight: 500;
     color: #cc3333;
-    text-decoration: none;
-    transition: color 0.2s ease;
+    background-color: #fff5f5;
+    border: 1px solid #f5c6c6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .profile-logout-btn:hover {
-    color: #990000;
+    background-color: #cc3333;
+    color: #fff;
+    border-color: #cc3333;
 }
 
 /* ===================== REVIEWS SECTION ===================== */

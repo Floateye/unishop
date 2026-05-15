@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -33,5 +34,13 @@ class LoginController extends Controller
                 'email' => 'These credentials do not match our records.',
             ])
             ->onlyInput('email');
+    }
+    public function destroy()
+    {
+        auth()->logout();
+
+        request()->session()->invalidate();
+
+        return redirect()->route('welcome')->withCookie(Cookie::forget('past_purchases'));
     }
 }

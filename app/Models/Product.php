@@ -36,7 +36,9 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-
+    public function adminProducts(){
+        return $this->hasMany(AdminProduct::class);
+    }
     public function admins()
     {
         return $this->belongsToMany(Admin::class, 'admin_products')

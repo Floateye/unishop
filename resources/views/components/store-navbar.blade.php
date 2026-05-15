@@ -71,11 +71,15 @@
                         </div>
                         @endif
 
-                        <div class="profile-popup-footer">
-                            <a href="{{ route('welcome') }}" class="profile-logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </div>
+                        <form action="{{route('logout')}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="profile-popup-footer">
+                                <button type="submit" class="profile-logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 @endauth

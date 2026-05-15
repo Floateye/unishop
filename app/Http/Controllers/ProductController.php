@@ -129,6 +129,12 @@ class ProductController extends Controller
 
         Gate::authorize(PermissionType::ProductDelete);
 
+        if ($product->orderItems()->exists()) {
+            return redirect(route('dashboard') . '#manage')->with(['error' => 'Cannot delete this product — it is referenced in existing orders.']);
+        }
+
+        $product->adminProducts()->delete();
+        $product->reviews()->delete();
         $product->delete();
 
         return redirect(route('dashboard') . '#manage')->with(['status' => 'Product deleted successfully!']);

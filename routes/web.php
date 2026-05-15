@@ -25,6 +25,7 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::post('/admin-login',[AdminLoginController::class,'store'])->name('admin-login.store');
 Route::get('/admin-login',[AdminLoginController::class,'create'])->name('admin-login.create');
 Route::get('/contact', ContactController::class)->name('contact');
+Route::delete('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');

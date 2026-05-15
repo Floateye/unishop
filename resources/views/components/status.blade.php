@@ -16,7 +16,7 @@
 @endif
 
 @if(session('error'))
-    <div id="status-error" class="status-info" style="background:#e3342f;">
+    <div id="status-error" class="status-info" style="background:#c0392b; border-left-color:#e74c3c;">
         <p>{{ session('error') }}</p>
     </div>
     <script>
